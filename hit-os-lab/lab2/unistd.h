@@ -130,7 +130,6 @@
 #define __NR_whoami	73
 
 #define _syscall0(type,name) \
-
 type name(void) \
 { \
 long __res; \
