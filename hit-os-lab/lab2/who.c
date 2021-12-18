@@ -6,19 +6,18 @@ char MyName[24];
 
 int sys_iam(const char *name)
 {
-    char str[25];
+    char str;
     int idx = 0;
-    while(idx <= 25 && str[idx] != '\0')
+    while((str = get_fs_byte(name + idx)) != '\0')
     {
-        str[idx] = get_fs_byte(name + idx);
-        idx++;
+	    if(idx > 24)
+	    {
+            idx = -1;
+            errno = EINVAL;
+            break;
+        }
+        MyName[idx++] = str;
     }
-    if(idx > 24)
-    {
-        idx = -1;
-        errno = EINVAL;
-    }
-    else strcpy(MyName, str);
     return idx;
 }
 
